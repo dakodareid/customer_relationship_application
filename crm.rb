@@ -1,5 +1,6 @@
 require_relative './contact.rb'
 require_relative './rolodex.rb'
+require "pry"
 
 class CRM
 	
@@ -47,6 +48,20 @@ class CRM
 		end
 	end
 
+	def modify_contact
+		puts "Choose a contact number to modify:"
+		contacts_list = @rolodex.contacts.map.with_index do |contact, index|
+			"#{index.to_s} #{contact.first_name} #{contact.last_name}"
+		end
+		puts contacts_list
+
+		selected = gets.chomp
+		puts "Choose a first_name:"
+		@rolodex.contacts[selected].first_name = gets.chomp
+		
+		binding.pry
+	end
+
 	def add_contact
 		print "First Name:"
 		firstname = gets.chomp
@@ -73,17 +88,30 @@ class CRM
 		puts "Who are you looking for"
 		specific_contact = gets.chomp
 
-		if @rolodex.include?(specific_contact)
-			puts "#{contact.first_name}, #{contact.last_name}, #{contact.email}, #{contact.note}"
+		search = @rolodex.contacts.select do |contact| 
+			contact.first_name.include?(specific_contact) || 
+			contact.last_name.include?(specific_contact) 
+		end
+
+		if !search.empty?
+			puts "Searches matching #{specific_contact} are:"
+			search.each do |contact|
+				puts "#{contact.first_name}, #{contact.last_name}, #{contact.email}, #{contact.note}"
+			end
 		else
 			puts "Can't find that contact."
 		end
 	end
 
-		
+
+	# def display_contact
+	# 	puts " Who are you looking for?"
+	# 	specific_contact = gets.chomp
+	# 	@rolodex.index {|contact| contact == "specific_contact"}
+	# end
+
 		# @rolodex.contacts(specific_contact)
 		# puts "#{contact.first_name}, #{contact.last_name}, #{contact.email}, #{contact.note}"
-
 end
 
 crm = CRM.new("Dakoda's CRM")
