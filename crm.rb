@@ -56,9 +56,13 @@ class CRM
 		puts contacts_list
 
 		selected = gets.chomp.to_i
-		puts "Choose a first_name:"
-		new_name = gets.chomp
-		@rolodex.update_first_name(selected, new_name)
+		puts "Choose a first name:"
+		new_first_name = gets.chomp
+		@rolodex.update_first_name(selected, new_first_name)
+
+		puts "Choose a last name:"
+		new_last_name = gets.chomp
+		@rolodex.update_last_name(selected, new_last_name)
 		
 	end
 
@@ -102,14 +106,7 @@ class CRM
 
 	def delete_contact
 	end
-	# def display_contact
-	# 	puts " Who are you looking for?"
-	# 	specific_contact = gets.chomp
-	# 	@rolodex.index {|contact| contact == "specific_contact"}
-	# end
-
-		# @rolodex.contacts(specific_contact)
-		# puts "#{contact.first_name}, #{contact.last_name}, #{contact.email}, #{contact.note}"
+	
 end
 
 crm = CRM.new("Dakoda's CRM")

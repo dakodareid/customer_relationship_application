@@ -20,9 +20,12 @@ class Rolodex
 		end
 	end
 
-	def update_first_name(this_contact_id, new_name)
-		@contacts[this_contact_id].first_name = new_name
+	def update_first_name(this_contact_id, new_first_name)
+		@contacts[this_contact_id].first_name = new_first_name
+	end
 
+	def update_last_name(this_contact_id, new_last_name)
+		@contacts[this_contact_id].last_name = new_last_name
 	end
 
 end
