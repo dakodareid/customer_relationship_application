@@ -55,11 +55,11 @@ class CRM
 		end
 		puts contacts_list
 
-		selected = gets.chomp
+		selected = gets.chomp.to_i
 		puts "Choose a first_name:"
-		@rolodex.contacts[selected].first_name = gets.chomp
+		new_name = gets.chomp
+		@rolodex.update_first_name(selected, new_name)
 		
-		binding.pry
 	end
 
 	def add_contact
@@ -72,7 +72,7 @@ class CRM
 		print "Note:"
 		note = gets.chomp
 
-		contact = Contact.new(firstname, lastname, contact, note)
+		contact = Contact.new(firstname, lastname, email, note)
 		@rolodex.add_contact(contact)
 	end
 
@@ -88,10 +88,7 @@ class CRM
 		puts "Who are you looking for"
 		specific_contact = gets.chomp
 
-		search = @rolodex.contacts.select do |contact| 
-			contact.first_name.include?(specific_contact) || 
-			contact.last_name.include?(specific_contact) 
-		end
+		search = @rolodex.get_by_name(specific_contact)
 
 		if !search.empty?
 			puts "Searches matching #{specific_contact} are:"
@@ -103,7 +100,8 @@ class CRM
 		end
 	end
 
-
+	def delete_contact
+	end
 	# def display_contact
 	# 	puts " Who are you looking for?"
 	# 	specific_contact = gets.chomp
