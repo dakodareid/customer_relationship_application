@@ -11,6 +11,8 @@ class CRM
 		@rolodex = Rolodex.new
 	end
 
+
+
 	def print_main_menu
 		puts "-------------------------"
 		puts "[1] Add a contact"
@@ -25,6 +27,8 @@ class CRM
 		puts "Enter a number:"
 	end
 
+
+
 	def main_menu
 		puts "Welcome to #{@name}"
 
@@ -36,6 +40,8 @@ class CRM
 			choose_option(input)
 		end
 	end
+
+
 
 	def choose_option(option)
 		case option
@@ -49,6 +55,8 @@ class CRM
 			puts "Invalid option, try again!"
 		end
 	end
+
+
 
 	def modify_contact
 		puts "Choose a contact number to modify:"
@@ -76,28 +84,25 @@ class CRM
 		
 	end
 
+
+
 	def delete_contact
-		
 		puts "Choose the ID of the contact you wish to delete:"
-		
 		@rolodex.contacts.each do |contact|
 			puts "FIRST NAME: #{contact.first_name}, LAST NAME: #{contact.last_name}, EMAIL: #{contact.email}, NOTE: #{contact.note},  ID: #{contact.id}"
 		end
-
 		who_to_delete = gets.chomp.to_i
-
 		@rolodex.contacts.each do |contact|
-
 			if contact.id == who_to_delete
 				@rolodex.contacts.delete(contact)
 				puts "#{who_to_delete} HAS BEEN DELETED!"
 			else
 				puts "Sorry, Can't find that person."
 			end
-
 		end
-
 	end
+
+
 
 	def add_contact
 		print "First Name:"
@@ -119,14 +124,12 @@ class CRM
 		end
 	end
 
+
+
 	def display_contact
-		
 		puts "Who are you looking for"
-
 		specific_contact = gets.chomp
-
 		search = @rolodex.get_by_name(specific_contact)
-
 		if !search.empty?
 			puts "Searches matching #{specific_contact} are:"
 			search.each do |contact|
@@ -137,6 +140,40 @@ class CRM
 		end
 	end
 
+
+
+	def display_attribute
+		puts "What feild are you interested in?"
+		puts "To view First Names enter: 1"
+		puts "To view Last Names enter: 2"
+		puts "To view Eamils enter: 3"
+		puts "To view Notes enter: 4"
+		puts "To return the menue enter any other key"
+	
+		wanted_attribute = gets.chomp.to_i
+		case wanted_attribute
+		when 1 then first_name_attribute
+		when 2 then last_name_attribute
+		when 3 then email_attribute
+		when 4 then note_attribute
+		end
+	end
+
+	def first_name_attribute
+		@rolodex.contacts.each do |contact| puts "#{contact.first_name}" end
+	end
+	
+	def last_name_attribute
+		@rolodex.contacts.each do |contact| puts "#{contact.last_name}" end
+	end
+
+	def email_attribute
+		@rolodex.contacts.each do |contact| puts "#{contact.email}" end
+	end
+
+	def note_attribute
+		@rolodex.contacts.each do |contact| puts "#{contact.notes}" end
+	end
 end
 
 crm = CRM.new("Dakoda's CRM")
