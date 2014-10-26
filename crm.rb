@@ -12,6 +12,7 @@ class CRM
 	end
 
 	def print_main_menu
+		puts "-------------------------"
 		puts "[1] Add a contact"
 		puts "[2] Modify a contact"
 		puts "[3] Display all contacts"
@@ -19,7 +20,8 @@ class CRM
 		puts "[5] Display an attribute"
 		puts "[6] Delete a contact"
 		puts "[7] Exit"
-		puts " " #<-- skip a line, for readability purposes only
+		puts "-------------------------"
+		puts  #<-- skip a line, for readability purposes only
 		puts "Enter a number:"
 	end
 
@@ -51,19 +53,50 @@ class CRM
 	def modify_contact
 		puts "Choose a contact number to modify:"
 		contacts_list = @rolodex.contacts.map.with_index do |contact, index|
-			"#{index.to_s} #{contact.first_name} #{contact.last_name}"
+			"[#{index.to_s}] FIRST NAME: #{contact.first_name}   LAST NAME: #{contact.last_name}   EMAIL: #{contact.email}   NOTE: #{contact.note}"
 		end
 		puts contacts_list
 
 		selected = gets.chomp.to_i
-		puts "Choose a first name:"
+		puts "NEW FIRST NAME:"
 		new_first_name = gets.chomp
 		@rolodex.update_first_name(selected, new_first_name)
 
-		puts "Choose a last name:"
+		puts "NEW LAST NAME:"
 		new_last_name = gets.chomp
 		@rolodex.update_last_name(selected, new_last_name)
+
+		puts "NEW EMAIL ADDRESS:"
+		new_email_name = gets.chomp
+		@rolodex.update_email_name(selected, new_email_name)
 		
+		puts "NEW NOTE ADDRESS:"
+		new_note_name = gets.chomp
+		@rolodex.update_note_name(selected, new_note_name)
+		
+	end
+
+	def delete_contact
+		
+		puts "Choose the ID of the contact you wish to delete:"
+		
+		@rolodex.contacts.each do |contact|
+			puts "FIRST NAME: #{contact.first_name}, LAST NAME: #{contact.last_name}, EMAIL: #{contact.email}, NOTE: #{contact.note},  ID: #{contact.id}"
+		end
+
+		who_to_delete = gets.chomp.to_i
+
+		@rolodex.contacts.each do |contact|
+
+			if contact.id == who_to_delete
+				@rolodex.contacts.delete(contact)
+				puts "#{who_to_delete} HAS BEEN DELETED!"
+			else
+				puts "Sorry, Can't find that person."
+			end
+
+		end
+
 	end
 
 	def add_contact
@@ -82,14 +115,14 @@ class CRM
 
 	def display_all_contacts
 		@rolodex.contacts.each do |contact|
-			puts "#{contact.first_name}, #{contact.last_name}, #{contact.email}, #{contact.note}"
-			puts
+			puts "FIRST NAME: #{contact.first_name}, LAST NAME: #{contact.last_name}, EMAIL: #{contact.email}, NOTE: #{contact.note}"
 		end
 	end
 
 	def display_contact
 		
 		puts "Who are you looking for"
+
 		specific_contact = gets.chomp
 
 		search = @rolodex.get_by_name(specific_contact)
@@ -97,16 +130,13 @@ class CRM
 		if !search.empty?
 			puts "Searches matching #{specific_contact} are:"
 			search.each do |contact|
-				puts "#{contact.first_name}, #{contact.last_name}, #{contact.email}, #{contact.note}"
+				puts "FIRST NAME: #{contact.first_name}, LAST NAME: #{contact.last_name}, EMAIL: #{contact.email}, NOTE: #{contact.note}"
 			end
 		else
 			puts "Can't find that contact."
 		end
 	end
 
-	def delete_contact
-	end
-	
 end
 
 crm = CRM.new("Dakoda's CRM")

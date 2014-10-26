@@ -28,4 +28,14 @@ class Rolodex
 		@contacts[this_contact_id].last_name = new_last_name
 	end
 
+	def update_email_name(this_contact_id, new_email_name)
+		@contacts[this_contact_id].email = new_email_name
+	end
+
+	def update_note_name(this_contact_id, new_note_name)
+		@contacts[this_contact_id].note = new_note_name
+	end
+
 end
+
+
